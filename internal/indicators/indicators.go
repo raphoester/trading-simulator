@@ -6,9 +6,11 @@ func CallFuncByName(name string, candles []binance.Candle, params map[string]str
 	var err error
 	err = nil
 	switch name {
-	case "AddMovingAverage":
+	case "AddSMA":
 		candles, err = AddMovingAverage(candles, params)
-
+	case "AddEMA":
+		candles, err = AddExponentialMovingAverage(candles, params)
 	}
+
 	return candles, err
 }

@@ -56,33 +56,50 @@ func ApplyCondition(condition Condition, candle binance.Candle) (bool, error) {
 	return ret, nil
 }
 
+// todo : factoriser le code
 func ApplyComparison(comparison Comparison, candle binance.Candle) (bool, error) {
 	var value1 float64
 	var value2 float64
 	switch comparison.Indicator1.Name {
-	case "MovingAverage":
+	case "SMA":
 		count, err := strconv.Atoi(comparison.Indicator1.Params["UnitCount"])
 		if err != nil {
-			return false, errors.New("invalid moving average parameter UnitCount")
+			return false, errors.New("missing SMA parameter UnitCount")
 		}
 		value1 = candle.SMA[count]
+
+	case "EMA":
+		count, err := strconv.Atoi(comparison.Indicator1.Params["UnitCount"])
+		if err != nil {
+			return false, errors.New("missing EMA parameter UnitCount")
+		}
+		value1 = candle.EMA[count]
+
 	case "Close":
 		value1 = candle.Close
 	default:
-		return true, errors.New("unknown operator : " + comparison.Indicator1.Name)
+		return true, errors.New("unknown indicator : " + comparison.Indicator1.Name)
 	}
 
 	switch comparison.Indicator2.Name {
-	case "MovingAverage":
+	case "SMA":
 		count, err := strconv.Atoi(comparison.Indicator2.Params["UnitCount"])
 		if err != nil {
-			return false, errors.New("invalid moving average parameter UnitCount")
+			return false, errors.New("missing SMA parameter UnitCount")
 		}
 		value2 = candle.SMA[count]
+
+	case "EMA":
+		count, err := strconv.Atoi(comparison.Indicator2.Params["UnitCount"])
+		if err != nil {
+			return false, errors.New("missing EMA parameter UnitCount")
+		}
+		value2 = candle.EMA[count]
+
 	case "Close":
 		value2 = candle.Close
 	default:
-		return true, errors.New("unknown operator : " + comparison.Indicator2.Name)
+		return true, errors.New("unknown indicator : " + comparison.Indicator2.Name)
 	}
 	return BoolOperationFromSymbol(comparison.Operator, value1, value2), nil
 }

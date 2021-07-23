@@ -53,6 +53,8 @@ func MakeTrades(condition Condition, candles []binance.Candle, wallet Wallet) (W
 	var trade Trade
 	for _, candle := range candles {
 
+		helper.ConsoleJson(candle)
+
 		apply, err := ApplyCondition(condition, candle)
 		if err != nil {
 			fmt.Println(err)
@@ -71,10 +73,12 @@ func MakeTrades(condition Condition, candles []binance.Candle, wallet Wallet) (W
 	}
 
 	//liquidation des actifs
-	closeTrade := wallet.SellAllCUR1(candles[len(candles)-1].Close)
-	closeTrade.Date = time.Unix(0, candles[len(candles)-1].CloseTime*1000000)
+	if wallet.CUR1 > 0 {
+		closeTrade := wallet.SellAllCUR1(candles[len(candles)-1].Close)
+		closeTrade.Date = time.Unix(0, candles[len(candles)-1].CloseTime*1000000)
 
-	tradeList = append(tradeList, closeTrade)
+		tradeList = append(tradeList, closeTrade)
+	}
 
 	return wallet, tradeList
 }

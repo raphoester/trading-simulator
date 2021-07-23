@@ -49,7 +49,7 @@ func SimulatorHandler(w http.ResponseWriter, r *http.Request) {
 	// ajouter les indicateurs
 	candles, err := AddIndicators(candles, indicators)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, errors.New("unable to add indicators"+err.Error()).Error(), http.StatusBadRequest)
 	}
 	// effectuer les trades
 	wallet := Wallet{
