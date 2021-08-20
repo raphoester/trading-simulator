@@ -10,6 +10,8 @@ func CallFuncByName(name string, candles []binance.Candle, params map[string]str
 		candles, err = AddMovingAverage(candles, params)
 	case "AddEMA":
 		candles, err = AddExponentialMovingAverage(candles, params)
+	case "AddRSI":
+		candles, err = AddRelativeStrengthIndex(candles, params)
 	}
 
 	return candles, err

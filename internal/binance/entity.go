@@ -15,6 +15,7 @@ type Candle struct {
 	Ignore      float64
 	SMA         map[int]float64
 	EMA         map[int]float64
+	RSI         map[int]float64
 }
 
 type StreamCandle struct {

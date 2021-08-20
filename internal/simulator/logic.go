@@ -75,6 +75,13 @@ func ApplyComparison(comparison Comparison, candle binance.Candle) (bool, error)
 		}
 		value1 = candle.EMA[count]
 
+	case "RSI":
+		count, err := strconv.Atoi(comparison.Indicator1.Params["UnitCount"])
+		if err != nil {
+			return false, errors.New("missing RSI parameter UnitCount")
+		}
+		value1 = candle.RSI[count]
+
 	case "Close":
 		value1 = candle.Close
 	default:
@@ -95,6 +102,13 @@ func ApplyComparison(comparison Comparison, candle binance.Candle) (bool, error)
 			return false, errors.New("missing EMA parameter UnitCount")
 		}
 		value2 = candle.EMA[count]
+
+	case "RSI":
+		count, err := strconv.Atoi(comparison.Indicator2.Params["UnitCount"])
+		if err != nil {
+			return false, errors.New("missing RSI parameter UnitCount")
+		}
+		value2 = candle.RSI[count]
 
 	case "Close":
 		value2 = candle.Close
