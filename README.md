@@ -1,6 +1,4 @@
-# trading-simulator
-
-INSTALLATION
+# INSTALLATION
 
 
   git clone <url>
