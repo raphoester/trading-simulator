@@ -1,6 +1,8 @@
 # trading-simulator
 
 INSTALLATION
-git clone <url>
-cd trading-simulator
-go run .
+
+
+  git clone <url>
+  cd trading-simulator
+  go run .
