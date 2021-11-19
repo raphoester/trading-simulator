@@ -1,7 +1,7 @@
 # INSTALLATION
 
 
-  git clone <url>
+  git clone https://github.com/raphoester/trading-simulator
   
   cd trading-simulator
   
